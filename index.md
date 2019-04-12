@@ -14,15 +14,23 @@ Link to Google Play store game app:
 
 Google Play app store listing integration statement:
 ```markdown
-This app is integrated with Alphonso software. Subject to your permission, the Alphonso software receives short duration audio samples from the microphone on your device. The audio samples never leave your device, but are irreversibly encoded (hashed) into digital "fingerprints." The fingerprints are compared off-device to commercial content (e.g., TV, OTT programming, ads music etc.). If a match is found, then appropriate recommendation for content or ads may be delivered to your mobile device. The Alphonso software only matches against known audio content and does not recognize or understand human conversations or other sounds.
+This app is integrated with Alphonso software. Subject to your permission, 
+the Alphonso software receives short duration audio samples from the 
+microphone on your device. The audio samples never leave your device, 
+but are irreversibly encoded (hashed) into digital "fingerprints." The 
+fingerprints are compared off-device to commercial content (e.g., TV, 
+OTT programming, ads music etc.). If a match is found, then appropriate 
+recommendation for content or ads may be delivered to your mobile device. 
+The Alphonso software only matches against known audio content and does 
+not recognize or understand human conversations or other sounds.
 ```
 
 ```markdown
 alphonso.xml (edited)
-`<map>
-  <string name="server_domain">http://tkacr197.alphonso.tv</string>
-  <boolean name="audio_file_upload_flag" value="false" />
-  <string name="acr_db_filename">acr.a.2.1.4.db.zero.mp3</string>
+`<map>`
+  `<string name="server_domain">http://tkacr197.alphonso.tv</string>`
+  `<boolean name="audio_file_upload_flag" value="false" />`
+  `<string name="acr_db_filename">acr.a.2.1.4.db.zero.mp3</string>
   <boolean name="capture_power_optimization_mode" value="true" />
   <int name="acr_shift" value="0" />
   <long name="capture_duration_ms" value="4000" />
