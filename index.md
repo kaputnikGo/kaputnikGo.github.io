@@ -1,18 +1,18 @@
 ## Audio Tracker demo
 
-using **Alphonso SDK** (third) example of capturing spoken phonetic alphabet.
+_(using **Alphonso SDK** (third) example of capturing spoken phonetic alphabet)_
 
-### Layout
-- Intro.
-- Method.
-- APK.
-- Screens.
-- Audio files.
+### Intro
+The question of "is my device listening to me?" can be answered in the positive if the following investigation is accurate. Determining an answer to this question involves the use of an Android mobile phone and a game app downloaded for free from Google Play.
 
+### Method
+The following investigation will demonstrate that the Alphonso SDK included in the game app records audio which it then packages into 64kb files suitable for uploading to servers. After installing the app, approving the permissions and then running it for the first time the phonetic alphabet was spoken out loud in the vicinity of the mobile device. A ten second portion of this alphabet reading is captured by the SDK using its default settings and subdivided into five 64kb files of raw audio data. Importing the five raw audio files into Audacity as Signed 16 bit PCM, little-endian, mono, 8000Hz allows the audio to be played back legibly.
+
+### APK
 Link to Google Play store game app:
 [Victoria Aztec Hidden Object ](https://play.google.com/store/apps/details?id=com.fgl.adrianmarik.victoriaaztecsfree)
 
-Google Play app store listing integration statement:
+Google Play app store listing Alphonso SDK integration statement:
 ```markdown
 This app is integrated with Alphonso software. Subject to your permission, 
 the Alphonso software receives short duration audio samples from the 
@@ -25,6 +25,8 @@ The Alphonso software only matches against known audio content and does
 not recognize or understand human conversations or other sounds.
 ```
 Despite what the above statement suggests, the app containing the Alphonso SDK can record human understandable audio, including speech, and has the option to upload as determined by the boolean below "audio_file_upload_flag".
+
+### Code
 
 ```markdown
 alphonso.xml (edit)
@@ -97,9 +99,9 @@ tv.alphonso.alphonsoclient.AlphonsoClient (edit)
 `
 ```
 
-_Images_
+### Images
 
-![SDK audio file tree](https://github.com/kaputnikGo/kaputnikGo.github.io/blob/master/images/alphonsoSDK-audio_filetree.jpg)
+![SDK audio file tree](/images/alphonsoSDK-audio_filetree.jpg)
 
-![Completed audio join file](https://github.com/kaputnikGo/kaputnikGo.github.io/blob/master/images/Screenshot_3-step-join-speed-redux.png)
+![Completed audio join file](/images/Screenshot_3-step-join-speed-redux.png)
 
