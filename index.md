@@ -34,7 +34,7 @@ In this particular investigation the Android game app is downloaded to a specifi
 ![Victoria Aztec game screen](/images/VictoriaAztec_game.jpg)
 
 Link to Google Play store game app:
-[Victoria Aztec Hidden Object ](https://play.google.com/store/apps/details?id=com.fgl.adrianmarik.victoriaaztecsfree)
+[Victoria Aztec Hidden Object](https://play.google.com/store/apps/details?id=com.fgl.adrianmarik.victoriaaztecsfree)
 
 Google Play app store listing Alphonso SDK integration statement:
 ```markdown
@@ -146,41 +146,172 @@ The primetime settings have defaults that are set in tv.alphonso.utils.Preferenc
 
 So from here we can assume that the app has specific times and device attitudes that it will allow it to commence the audio capture process.
 
-alphonso.xml (edit)
+When the game app is first started, the SDK inside it gets an updated and obfuscated database file (acr.a.2.1.4.db.zero.mp3) and sets various parameters just prior to commencing audio recording. In the test conducted, the device was kept stationary, the GPS location was spoofed to a random locale in the USA and the phonetic alphabet (alpha, bravo, charlie, ..., zulu) was read out aloud.
+
+alphonso.xml (redacted. note: dev-id and advertising-id have same values)
 ```xml
 <map>
-  <float name="location_accuracy" value="5.3096943" />
-  <string name="server_domain">http://tkacr197.alphonso.tv</string>
-  <boolean name="audio_file_upload_flag" value="false" />
-  <int name="capture_count" value="3" />
-  <string name="acr_db_filename">acr.a.2.1.4.db.zero.mp3</string>
-  <boolean name="capture_power_optimization_mode" value="true" />
-  <int name="acr_shift" value="0" />
-  <long name="capture_duration_ms" value="4000" />
-  <long name="capture_scenario_sleep_interval" value="8" />
-  <string name="acr_db_file_dir">/data/user/0/com.fgl.adrianmarik.victoriaaztecsfree/files</string>
-  <long name="capture_scenario_sleep_interval_livetv_match" value="60" />
-  <int name="capture_prebuffer_size" value="0" />
-  <int name="db_max_records" value="1000" />
-  <string name="acr_db_file_abs_path">/data/user/0/com.fgl.adrianmarik.victoriaaztecsfree/files/acr.a.2.1.4.db.zero.mp3</string>
-  <boolean name="limit_ad_tracking_flag" value="false" />
-  <string name="server_port">4432</string>
-  <long name="capture_scenario_sleep_interval_max" value="160" />
-  <long name="location_poll_interval" value="15" />
-  <float name="location_speed" value="0.09888778" />
+    <int name="ad_id_poll_duration" value="1800" />
+    <float name="location_accuracy" value="5.3096943" />
+    <string name="uuid">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</string>
+    <int name="clock_sync_saved_iterations" value="5" />
+    <string name="clock_skew_server_name">clockskew.alphonso.tv</string>
+    <float name="location_latitude" value="37.23414" />
+    <long name="location_time" value="1541553213743" />
+    <int name="acr_mode" value="2" />
+    <string name="server_domain">http://tkacr258.alphonso.tv</string>
+    <boolean name="audio_file_upload_timedout_flag" value="false" />
+    <string name="location_provider">network</string>
+    <float name="location_longitude" value="-120.46891" />
+    <boolean name="history_flag" value="true" />
+    <long name="capture_sleep_time" value="1" />
+    <boolean name="audio_file_upload_flag" value="true" />
+    <int name="capture_scenario_count" value="0" />
+    <string name="dev_id">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</string>
+    <int name="capture_count" value="3" />
+    <int name="clock_sync_poll_interval" value="600" />
+    <float name="capture_scenario_sleep_inhibiter_increment" value="2.0" />
+    <string name="acr_db_filename">acr.a.2.1.4.db.zero.mp3</string>
+    <string name="android_id">XXXXXXXXXXXXXXXX</string>
+    <string name="advertising_id">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</string>
+    <string name="server_port_ssl"></string>
+    <boolean name="capture_power_optimization_mode" value="true" />
+    <long name="capture_scenario_sleep_interval" value="8" />
+    <long name="capture_duration_ms" value="4000" />
+    <int name="acr_shift" value="0" />
+    <float name="location_altitude" value="44.54821" />
+    <long name="capture_scenario_sleep_interval_livetv_match" value="60" />
+    <string name="acr_db_file_dir">/data/user/0/com.fgl.adrianmarik.victoriaaztecsfree/files</string>
+    <int name="capture_prebuffer_size" value="0" />
+    <int name="db_max_records" value="1000" />
+    <string name="acr_db_file_abs_path">/data/user/0/com.fgl.adrianmarik.victoriaaztecsfree/files/acr.a.2.1.4.db.zero.mp3</string>
+    <float name="location_speed" value="0.09888778" />
+    <boolean name="record_timeouts_flag" value="false" />
+    <string name="server_domain_ssl"></string>
+    <string name="server_port">4432</string>
+    <boolean name="limit_ad_tracking_flag" value="false" />
+    <long name="capture_scenario_sleep_interval_max" value="160" />
+    <string name="alp_uid">XXXXXXXXX</string>
+    <long name="location_poll_interval" value="15" />
 </map>
-
 ```
 
-tv.alphonso.audiorecorderservice.AudioRecorder (edit)
+The recording of audio is initiated by the AlphonsoService which creates tv.alphonso.audiocaptureservice.AudioCaptureService that is in charge of the recording functions (acrMode is set to 2: SplitACR).
+```java
+    public void startRecording() {
+        this.mRecorderThread.startRecording(this.mCaptureInstance);
+    }
+    
+    public void enableAcr(int acrMode) {
+        if (this.mRecorderThread != null) {
+            AudioCaptureClient captureClient;
+            switch (acrMode) {
+                case 1:
+                    captureClient = new LocalACR();
+                    break;
+                case 2:
+                    captureClient = new SplitACR();
+                    break;
+                case 4:
+                    captureClient = new DualACR();
+                    break;
+                case 8:
+                    captureClient = new ServerACR();
+                    break;
+                default:
+                    Log.e(TAG, "Invalid acrType: " + acrMode + ". Cannot instantiate AudioCaptureClient.");
+                    return;
+            }
+            if (acrMode != 8) {
+                ((LocalACR) captureClient).setOnBoardAudioDBFilePath(this.mOnBoardAudioDBFilePath);
+                ((LocalACR) captureClient).setOnBoardAudioDBFileDir(this.mOnBoardAudioDBFileDir);
+                ((LocalACR) captureClient).setAcrShift(this.mAcrShift);
+            }
+            captureClient.setRecordTimeouts(this.mRecordTimeouts);
+            captureClient.init(this.mDeviceId, this.mContext, this.mAudioFPUploadService, this.mAlphonsoClient, this);
+            captureClient.setAudioFileUpload(this.mAudioFileUpload);
+            captureClient.setAudioFileUploadTimedout(this.mAudioFileUploadTimedout);
+            captureClient.mClockSkew = this.mClockSkew;
+            this.mRecorderThread.addClient(acrMode, captureClient);
+        }
+    }
+```
+
+The recorder thread sets some parameters that control the way the audio is recorded from the microphone.
+tv.alphonso.audiocaptureservice.RecorderThread (edit)
 ```java  
-  private static final int RECORDER_AUDIO_ENCODING = 2;
-  private static final int RECORDER_BIG_BUFFER_MULTIPLIER = 16;
-  private static final int RECORDER_CHANNELS = 16;
-  private static final int RECORDER_SAMPLERATE_44100 = 44100;
-  private static final int RECORDER_SAMPLERATE_8000 = 8000;
-  private static final int RECORDER_SMALL_BUFFER_MULTIPLIER = 4;
+    private static final int RECORDER_AUDIO_BYTES_PER_SEC = 16000;
+    private static final int RECORDER_AUDIO_ENCODING = 2;
+    private static final int RECORDER_BIG_BUFFER_MULTIPLIER = 16;
+    private static final int RECORDER_CHANNELS = 16;
+    private static final int RECORDER_SAMPLERATE_44100 = 44100;
+    private static final int RECORDER_SAMPLERATE_8000 = 8000;
+    private static final int RECORDER_SMALL_BUFFER_MULTIPLIER = 4;
 ```
+
+The enableACR method calls tv.alphonso.audiocaptureservice.SplitACR extends LocalACR which extends AudioCaptureClient. These functions set up the analysis of any audio captured by sending the raw audio data to an included native library called **libacr.so**. here its via the method acrFingerprintOctet(...)
+```java
+    public byte send(byte[] bytes, int numBytes, int sampleRate) {
+        if (this.mFpStart == 0) {
+            this.mFpStart = SystemClock.elapsedRealtime();
+        }
+        byte[] fingerPrint = acrFingerprintOctet(this.mLocalAudioMatchingToken[this.mCurrentTokenIndex], bytes, numBytes);
+        if (!(fingerPrint == null || fingerPrint.length == 0)) {
+            if (this.mFpStart != 0 && this.mFpEnd == 0) {
+                this.mFpEnd = SystemClock.elapsedRealtime();
+                this.mFpDelay = this.mFpEnd - this.mFpStart;
+                if (AudioCaptureService.debug) {
+                    Log.d(TAG, "Delay = " + Utils.getDurationAsString(this.mFpDelay) + "; Fp-size = " + fingerPrint.length + " for token: " + this.mToken + " timestamp: " + this.mAudioBufferTimestampGMT);
+                }
+            }
+            sendFingerprint(fingerPrint, sampleRate);
+            this.mFpStart = 0;
+            this.mFpEnd = 0;
+        }
+        return (byte) 2;
+    }
+
+```
+
+the file tv.alphonso.audiocaptureservice.LocalACR includes a function of interest:
+```java
+    public void uploadAudioFileIfRequired(String resultSuffix) {
+        if (getOnBoardAudioDBFileDir() == null) {
+            return;
+        }
+        if ((isAudioFileUpload() && getSuccessResultSuffix() != null) || (isAudioFileUploadTimedout() && getSuccessResultSuffix() == null)) {
+            String suffix;
+            Bundle params = new Bundle();
+            params.putString("device_id", this.mDeviceId);
+            params.putString("start_time", this.mCaptureInstance.mStartTimeYYMMDD);
+            params.putString("acr_type", getAcrType());
+            params.putString("token", this.mToken);
+            if (getSuccessResultSuffix() != null) {
+                suffix = getSuccessResultSuffix();
+            } else {
+                suffix = resultSuffix;
+            }
+            params.putString("result_suffix", suffix.replace(' ', '_').replace('&', '_'));
+            params.putString("filename", getOnBoardAudioDBFileDir() + "/" + this.mLocalAudioMatchingToken[this.mCurrentTokenIndex] + ".audio.raw");
+            Message msg = this.mAlphonsoClient.mHandler.obtainMessage();
+            msg.what = 8;
+            msg.setData(params);
+            if (AudioCaptureService.debug) {
+                Log.i(TAG, "Sending AUDIO_CLIP_UPLOAD message to AlphonsoClient Service");
+            }
+            this.mAlphonsoClient.mHandler.sendMessage(msg);
+        }
+    }
+
+```
+
+The following line is of particular interest as it refers to the raw audio files that are stored on the device at the location referred to in the Alphonso.xml file shown above.
+```java
+params.putString("filename", getOnBoardAudioDBFileDir() + "/" + this.mLocalAudioMatchingToken[this.mCurrentTokenIndex] + ".audio.raw");
+```
+These raw audio files are located in the device storage allocated for the app.
+![Alphonos ACR folder file list](/images/Alphonso-acr-folder.jpg)
+
 
 tv.alphonso.alphonsoclient.AlphonsoClient (edit)
 ```java 
@@ -214,10 +345,16 @@ tv.alphonso.audiocaptureservice.LocalACR (edit)
   protected String[] mLocalAudioMatchingToken = new String[]{"LocalACR1", "LocalACR2", "LocalACR3", "LocalACR4", "LocalACR5"};
 ```
 
+### Audio
+After the above test has been run the captured audio files are copied across to a computer running Audacity. Each of the raw audio files are just that, raw data representing Pulse Code Modulation (**PCM**) audio. PCM is a way of storing the results of an analogue signal to digital data conversion where the value (bit depth) of the amplitude at a given time (1/sample rate) is recorded.
 
-### Images
+As the raw audio has no metadata information to inform any computer program what it is, some manual settings are used at the import stage in Audacity.
+![Audactiy raw audio settings](/images/import-audio-settings-alphonso.jpg)
 
-![SDK audio file tree](/images/alphonsoSDK-audio_filetree.jpg)
-
+The imported audio waveform consisting of three raw files looks like this, where its easy to spot the blocks of measured spoken phonetic alphabet occuring.
 ![Completed audio join file](/images/Screenshot_3-step-join-speed-redux.png)
 
+The joined audio file is here as an mp3:
+[3-step-join-speed-redux.mp3](/audio/3-step-join-speed-redux.mp3)
+
+All thats left to do is figure out if this audio was uploaded to their servers...
