@@ -30,7 +30,7 @@ Expanding on this initial purpose, several companies are also using this ACR tec
 Another future trend can be found in a Facebook patent application that seeks to record and fingerprint background, ambient sounds to provide a context for devices and their usage - [Fastcompany Facebook ambient audio patent article](https://www.fastcompany.com/90178158/facebook-downplays-ambient-audio-tech-that-can-eavesdrop-on-you). This article also discusses other uses of this technique by companies such as Alphonso and Cambridge Analytica.
 
 ### XDT
-Cross device tracking is primarily used by advertisers and marketers as a method of measuring where and howeffect their advert dollar spends are. The intention is to prove that, for example, a company's expensive US NFL Superbowl commercial was seen by _n_ number of eyes and that a subset of that number then went on to view the company's website and (ideally) purchase something. Another part of this concept is to promote what is referred to as _nudging_ which suggests that it is possible for a given marketing campaign to "direct" the viewer in a particualr direction over all others. A useful reading on this concept can be found in [Online Manipulation: Hidden Influences in a Digital World](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3306006).
+Cross device tracking is primarily used by advertisers and marketers as a method of measuring where and how effective their advert dollar spends are. The intention is to prove that, for example, a company's expensive US NFL Superbowl commercial was seen by _n_ number of eyes and that a subset of that number then went on to view the company's website and (ideally) purchase something. Another part of this concept is to promote what is referred to as _nudging_ which suggests that it is possible for a given marketing campaign to "direct" the viewer in a particular direction. A useful reading on this concept can be found in [Online Manipulation: Hidden Influences in a Digital World](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3306006).
 
 Wikipedia has a simple [definition](https://en.wikipedia.org/wiki/Cross-device_tracking) quoted below:
 ```markdown
@@ -418,7 +418,7 @@ The raw audio has no metadata information to instruct any computer program what 
 The imported audio waveform consisting of three raw files looks like this, where its easy to spot the blocks of measured spoken phonetic alphabet occuring.
 ![Completed audio join file](/images/Screenshot_3-step-join-speed-redux.png)
 
-The joined audio file is here as an mp3:
+The three raw audio files stored on the device are joined and saved as an mp3:
 [3-step-join-speed-redux.mp3](/audio/3-step-join-speed-redux.mp3)
 
 ### Conclusion
