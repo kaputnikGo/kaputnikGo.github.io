@@ -394,7 +394,7 @@ The joined audio file is here as an mp3:
 [3-step-join-speed-redux.mp3](/audio/3-step-join-speed-redux.mp3)
 
 ### Conclusion
-The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains. The SDK **does** have an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers.
+The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains.The SDK **does** have the option to upload fingerprints to their servers. The SDK **does** have an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers.
 
 Below is an image from the latest marketing materials from Alphonso showing associations with other data providing companies:
 ![Data Partners](/images/alphonso_data_partners.jpg)
