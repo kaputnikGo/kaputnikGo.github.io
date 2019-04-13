@@ -68,7 +68,6 @@ One of the first methods to reduce the amount of possible useless recordings, is
 
 The AlphonsoService calls sets various parameters including "deviceId", "androidId", "adId", "uuId" and a "PrimeTimeArray". 
 ```markdown
-`
     public void initializePrimeTimeArray() {
         this.mPrimeTimeArray = new PrimeTime[5];
         this.mPrimeTimeArray[0] = new PrimeTime();
@@ -87,12 +86,10 @@ The AlphonsoService calls sets various parameters including "deviceId", "android
         this.mPrimeTimeArray[4].asFSMBeginEvent = 55;
         this.mPrimeTimeArray[4].asFSMEndEvent = 56;
     }
-`
 ```
 
 The primeTimeArray is created and set by tv.alphonso.service.PrimeTime which determines when to begin and end any audio captures. 
 ```markdown
-`
     public PrimeTime() {
         this.begin = "";
         this.end = "";
@@ -102,12 +99,10 @@ The primeTimeArray is created and set by tv.alphonso.service.PrimeTime which det
         this.captureScenarioSleepIntervalLivetv = -1;
         this.captureScenarioSleepIntervalInhibiterIncrement = -1.0d;
     }
-`
 ```
 
 It also calls tv.alphonso.service.LocationService which periodically reports the device location to a server.
-```markdown 
-`    
+```markdown    
   public void sendLocationUpdate(Location location) {
         Bundle params = new Bundle();
         params.putParcelable("location", location);
@@ -124,14 +119,12 @@ It also calls tv.alphonso.service.LocationService which periodically reports the
             this.mProvClient.processLocationUpdate();
         }
     }
-`
 ```
 
 Location services are also used to determine whether the device is stationary, which can be a good indication that the user is sitting down and looking at the screen.
 
 ```markdown
 tv.alphonso.utils.Utils (edit)
-` 
   locBundle.put("latitude", Double.valueOf(loc.getLatitude()));
   locBundle.put("longitude", Double.valueOf(loc.getLongitude()));
   locBundle.put("altitude", Double.valueOf(loc.getAltitude()))
@@ -141,17 +134,14 @@ tv.alphonso.utils.Utils (edit)
   
   getTMCountryCode(cxt);
   tm.getNetworkCountryIso(); 
-`
 ```
 
 The primetime settings have defaults that are set in tv.alphonso.utils.PreferencesManager.  :
-```markdown
-`   
+```markdown  
   public static final String ACS_EVENING_PRIME_TIME_BEGIN_DEFAULT = "19:00";
   public static final String ACS_EVENING_PRIME_TIME_END_DEFAULT = "22:00";
   public static final String ACS_MORNING_PRIME_TIME_BEGIN_DEFAULT = "06:00";
   public static final String ACS_MORNING_PRIME_TIME_END_DEFAULT = "09:00";
-`
 ```
 
 So from here we can assume that the app has specific times and device attitudes that it will allow it to commence the audio capture process.
@@ -159,7 +149,7 @@ So from here we can assume that the app has specific times and device attitudes 
 
 ```markdown
 alphonso.xml (edit)
-`
+
 <map>
   <float name="location_accuracy" value="5.3096943" />
   <string name="server_domain">http://tkacr197.alphonso.tv</string>
@@ -181,24 +171,24 @@ alphonso.xml (edit)
   <long name="location_poll_interval" value="15" />
   <float name="location_speed" value="0.09888778" />
 </map>
-`
+
 ```
 
 ```markdown
 tv.alphonso.audiorecorderservice.AudioRecorder (edit)
-`   
+  
   private static final int RECORDER_AUDIO_ENCODING = 2;
   private static final int RECORDER_BIG_BUFFER_MULTIPLIER = 16;
   private static final int RECORDER_CHANNELS = 16;
   private static final int RECORDER_SAMPLERATE_44100 = 44100;
   private static final int RECORDER_SAMPLERATE_8000 = 8000;
   private static final int RECORDER_SMALL_BUFFER_MULTIPLIER = 4;
-`
+
 ```
 
 ```markdown
 tv.alphonso.alphonsoclient.AlphonsoClient (edit)
-` 
+ 
   if (args.getBoolean("audio_file_upload")) {
     params.put("filename", 
                getAudioFileUploadFilename(this.mDevId, args.getString("start_time"), 
@@ -222,14 +212,13 @@ tv.alphonso.alphonsoclient.AlphonsoClient (edit)
         filename.append(".audio.raw");
         return filename.toString();
     }
-`
 ```
 
 ```markdown
 tv.alphonso.audiocaptureservice.LocalACR (edit)
-`
+
   protected String[] mLocalAudioMatchingToken = new String[]{"LocalACR1", "LocalACR2", "LocalACR3", "LocalACR4", "LocalACR5"};
-`
+
 ```
 
 
