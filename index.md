@@ -90,15 +90,15 @@ The AlphonsoService calls sets various parameters including "deviceId", "android
 
 The primeTimeArray is created and set by tv.alphonso.service.PrimeTime which determines when to begin and end any audio captures. 
 ```markdown
-    public PrimeTime() {
-        this.begin = "";
-        this.end = "";
-        this.captureCount = -1;
-        this.captureScenarioSleepInterval = -1;
-        this.captureScenarioSleepIntervalMax = -1;
-        this.captureScenarioSleepIntervalLivetv = -1;
-        this.captureScenarioSleepIntervalInhibiterIncrement = -1.0d;
-    }
+public PrimeTime() {
+    this.begin = "";
+    this.end = "";
+    this.captureCount = -1;
+    this.captureScenarioSleepInterval = -1;
+    this.captureScenarioSleepIntervalMax = -1;
+    this.captureScenarioSleepIntervalLivetv = -1;
+    this.captureScenarioSleepIntervalInhibiterIncrement = -1.0d;
+}
 ```
 
 It also calls tv.alphonso.service.LocationService which periodically reports the device location to a server.
