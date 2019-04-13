@@ -432,7 +432,7 @@ Below is an image from the latest marketing materials from Alphonso showing asso
 Below is an image from Alphonso showing "Tune-In" attribution partners:
 ![Attribution Partners](/images/alphonso_tunein_partners.jpg)
 
-In 2015 Alphonso filed for a [patent](/doc/alphonso_audio_signature_motion.pdf) titled "Efficient Apparatus and Method for Audio Signature Generation Using Motion"> A similar [patent](/doc/alphonso_audio_threshold.pdf) was filed at the same time where the difference was for an Audio Threshold feature that would set recording parameters. The first patent's abstract is below:
+In 2015 Alphonso filed for a [patent](/doc/alphonso_audio_signature_motion.pdf) titled "Efficient Apparatus and Method for Audio Signature Generation Using Motion". A similar [patent](/doc/alphonso_audio_threshold.pdf) was filed at the same time where the difference was for an Audio Threshold feature that would set recording parameters. The first patent's abstract is below:
 ```markdown
 An automatic content recognition system that includes a user device 
 for the purpose of capturing audio and generating an audio signature. 
