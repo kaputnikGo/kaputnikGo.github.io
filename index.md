@@ -54,7 +54,7 @@ not recognize or understand human conversations or other sounds.
 The Alphonso SDK in the app provides a link to the privacy policy of the game developer on its opt-out screen : [Molu Apps Privacy Policy](http://moluapps.com/Privacy_Policy.html).
 
 Permissions requested by the app at install are shown to the user, as well as a brief reasoning:
-```markdown
+```java
 "This app uses audio to detect TV ads and content and shows appropriate mobile ads"
 "android.permission.RECORD_AUDIO"
 "android.permission.ACCESS_COARSE_LOCATION"
@@ -67,7 +67,7 @@ One of the first methods to reduce the amount of possible useless recordings, is
 ![Alphonso service detect](/images/Alphonso-service-detect.jpg)
 
 The AlphonsoService calls sets various parameters including "deviceId", "androidId", "adId", "uuId" and a "PrimeTimeArray". 
-```markdown
+```java
     public void initializePrimeTimeArray() {
         this.mPrimeTimeArray = new PrimeTime[5];
         this.mPrimeTimeArray[0] = new PrimeTime();
@@ -89,7 +89,7 @@ The AlphonsoService calls sets various parameters including "deviceId", "android
 ```
 
 The primeTimeArray is created and set by tv.alphonso.service.PrimeTime which determines when to begin and end any audio captures. 
-```markdown
+```java
 public PrimeTime() {
     this.begin = "";
     this.end = "";
@@ -102,7 +102,7 @@ public PrimeTime() {
 ```
 
 It also calls tv.alphonso.service.LocationService which periodically reports the device location to a server.
-```markdown    
+```java    
   public void sendLocationUpdate(Location location) {
         Bundle params = new Bundle();
         params.putParcelable("location", location);
@@ -123,8 +123,8 @@ It also calls tv.alphonso.service.LocationService which periodically reports the
 
 Location services are also used to determine whether the device is stationary, which can be a good indication that the user is sitting down and looking at the screen.
 
-```markdown
 tv.alphonso.utils.Utils (edit)
+```java
   locBundle.put("latitude", Double.valueOf(loc.getLatitude()));
   locBundle.put("longitude", Double.valueOf(loc.getLongitude()));
   locBundle.put("altitude", Double.valueOf(loc.getAltitude()))
@@ -137,7 +137,7 @@ tv.alphonso.utils.Utils (edit)
 ```
 
 The primetime settings have defaults that are set in tv.alphonso.utils.PreferencesManager.  :
-```markdown  
+```java  
   public static final String ACS_EVENING_PRIME_TIME_BEGIN_DEFAULT = "19:00";
   public static final String ACS_EVENING_PRIME_TIME_END_DEFAULT = "22:00";
   public static final String ACS_MORNING_PRIME_TIME_BEGIN_DEFAULT = "06:00";
@@ -146,10 +146,8 @@ The primetime settings have defaults that are set in tv.alphonso.utils.Preferenc
 
 So from here we can assume that the app has specific times and device attitudes that it will allow it to commence the audio capture process.
 
-
-```markdown
 alphonso.xml (edit)
-
+```xml
 <map>
   <float name="location_accuracy" value="5.3096943" />
   <string name="server_domain">http://tkacr197.alphonso.tv</string>
@@ -174,21 +172,18 @@ alphonso.xml (edit)
 
 ```
 
-```markdown
 tv.alphonso.audiorecorderservice.AudioRecorder (edit)
-  
+```java  
   private static final int RECORDER_AUDIO_ENCODING = 2;
   private static final int RECORDER_BIG_BUFFER_MULTIPLIER = 16;
   private static final int RECORDER_CHANNELS = 16;
   private static final int RECORDER_SAMPLERATE_44100 = 44100;
   private static final int RECORDER_SAMPLERATE_8000 = 8000;
   private static final int RECORDER_SMALL_BUFFER_MULTIPLIER = 4;
-
 ```
 
-```markdown
 tv.alphonso.alphonsoclient.AlphonsoClient (edit)
- 
+```java 
   if (args.getBoolean("audio_file_upload")) {
     params.put("filename", 
                getAudioFileUploadFilename(this.mDevId, args.getString("start_time"), 
@@ -214,11 +209,9 @@ tv.alphonso.alphonsoclient.AlphonsoClient (edit)
     }
 ```
 
-```markdown
 tv.alphonso.audiocaptureservice.LocalACR (edit)
-
+```java
   protected String[] mLocalAudioMatchingToken = new String[]{"LocalACR1", "LocalACR2", "LocalACR3", "LocalACR4", "LocalACR5"};
-
 ```
 
 
