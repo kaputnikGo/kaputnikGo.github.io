@@ -1,6 +1,6 @@
 ## Audio Tracker demo
 
-_(using **Alphonso SDK** (third) example of capturing spoken phonetic alphabet)_
+_(using **Alphonso SDK** 2.0.46 (third) example of capturing spoken phonetic alphabet)_
 
 ### Introduction
 The research published on this page is one part of an ongoing project started in 2015 that initially focussed on near ultra-high frequency (**NUHF**) audio beacon signals directed at mobile devices for tracking purposes. the project, known as **PilferShush**, has resulted in an audio counter-surveillance Android app that is free, [open source](https://github.com/kaputnikGo/PilferShushJammer) and available to download from either [Google Play](https://play.google.com/store/apps/details?id=cityfreqs.com.pilfershushjammer) or [F-Droid](https://f-droid.org/packages/cityfreqs.com.pilfershushjammer/) store. The research page hosted on the [City Frequencies](https://www.cityfreqs.com.au/pilfer.php) website is the primary location for information regarding this research while more general research is posted to the [@cityfreqs](https://twitter.com/cityfreqs) Twitter account.
@@ -422,7 +422,12 @@ The three raw audio files stored on the device are joined and saved as an mp3:
 [3-step-join-speed-redux.mp3](/audio/3-step-join-speed-redux.mp3)
 
 ### Conclusion
-The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains.The SDK **does** also have the option to upload fingerprints to their servers. The SDK **does** have an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers.
+The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains.The SDK **does** also have the option to upload fingerprints to their servers. 
+
+The SDK **does** have an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers. While the app used in this demonstration was last updated in 2017, it still connects to servers and downloads various files.
+
+### Future
+The demonstration examined here was run using a mobile device that had GPS spoofing enabled, however querying its network location would have revealed the local ISP's assigned IP address. A future run should either be located in the US or be connected to a proxy that exits in the US.
 
 Alphonso as of late appears to have moved away from the "smart phone" software area and into the "smart TV" area with partnerships that hint at utilising both TV apps and hardware to identify the audio from television broadcasts, streaming videos and gaming content.
 
@@ -446,5 +451,3 @@ may communicate with a server having a database that contains reference
 audio signatures.
 ```
 
-### Future
-The demonstration examined here was run using a mobile device that had GPS spoofing enabled, however querying its network location would have revealed the local ISP's assigned IP address. A future run should either be located in the US or be connected to a proxy that exits in the US.
