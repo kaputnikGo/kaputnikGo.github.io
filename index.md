@@ -374,9 +374,37 @@ The file **tv.alphonso.alphonsoclient.AlphonsoClient** has several relevant part
     }
 ```
 
-The file **tv.alphonso.audiocaptureservice.LocalACR** sets the unique part of the filenames:
+The file **tv.alphonso.audiocaptureservice.LocalACR** sets the unique part of the filenames and has an upload audio file function:
 ```java
-  protected String[] mLocalAudioMatchingToken = new String[]{"LocalACR1", "LocalACR2", "LocalACR3", "LocalACR4", "LocalACR5"};
+    protected String[] mLocalAudioMatchingToken = new String[]{"LocalACR1", "LocalACR2", "LocalACR3", "LocalACR4", "LocalACR5"};
+  
+    public void uploadAudioFileIfRequired(String resultSuffix) {
+        if (getOnBoardAudioDBFileDir() == null) {
+            return;
+        }
+        if ((isAudioFileUpload() && getSuccessResultSuffix() != null) || (isAudioFileUploadTimedout() && getSuccessResultSuffix() == null)) {
+            String suffix;
+            Bundle params = new Bundle();
+            params.putString("device_id", this.mDeviceId);
+            params.putString("start_time", this.mCaptureInstance.mStartTimeYYMMDD);
+            params.putString("acr_type", getAcrType());
+            params.putString("token", this.mToken);
+            if (getSuccessResultSuffix() != null) {
+                suffix = getSuccessResultSuffix();
+            } else {
+                suffix = resultSuffix;
+            }
+            params.putString("result_suffix", suffix.replace(' ', '_').replace('&', '_'));
+            params.putString("filename", getOnBoardAudioDBFileDir() + "/" + this.mLocalAudioMatchingToken[this.mCurrentTokenIndex] + ".audio.raw");
+            Message msg = this.mAlphonsoClient.mHandler.obtainMessage();
+            msg.what = 8;
+            msg.setData(params);
+            if (AudioCaptureService.debug) {
+                Log.i(TAG, "Sending AUDIO_CLIP_UPLOAD message to AlphonsoClient Service");
+            }
+            this.mAlphonsoClient.mHandler.sendMessage(msg);
+        }
+    }  
 ```
 
 ### Audio
