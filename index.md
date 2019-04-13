@@ -158,9 +158,9 @@ The primetime settings have defaults that are set in **tv.alphonso.utils.Prefere
   public static final String ACS_MORNING_PRIME_TIME_END_DEFAULT = "09:00";
 ```
 
-So from here we can assume that the app has specific times and device attitudes that it will allow it to commence the audio capture process.
+So from here we can assume that the app has specific times and device attitudes that will allow it to commence the audio capture process.
 
-When the game app is first started, the SDK inside it gets an updated and obfuscated database file called acr.a.2.1.4.db.zero.mp3 (note the mp3 file extension). The head of the file looks like this: 
+When the game app is first started, the SDK embedded inside gets an updated and obfuscated database file called acr.a.2.1.4.db.zero.mp3 (note the mp3 file extension). The head of the file looks like this: 
 ```
 00000000  41 6c 70 68 6f 6e 73 6f  41 43 52 20 20 20 20 20  |AlphonsoACR     |
 00000010  00 00 00 00 06 31 2e 34  2e 30 00 55 01 00 00 1a  |.....1.4.0.U....|
@@ -175,7 +175,7 @@ The encrypted database file probably has a schema that conforms to this but it m
 ![database schema](/images/Screenshot_database.png)
 
 
-Some key parameters were also set in the following file found in the app storage directory:
+Some key parameters were also set when the app is first run, this time in the following file found in the app storage directory:
 **alphonso.xml** (redacted. _n.b._: dev-id and advertising-id have same values)
 ```xml
 <map>
@@ -226,7 +226,7 @@ Some key parameters were also set in the following file found in the app storage
 
 In the test conducted, the device was kept stationary, the GPS location was spoofed to a random locale in the USA and the phonetic alphabet (alpha, bravo, charlie, ..., zulu) was spoken aloud.
 
-The recording of audio is initiated by the AlphonsoService which creates **tv.alphonso.audiocaptureservice.AudioCaptureService** that is in charge of the recording functions (acrMode is set to 2: SplitACR).
+The recording of audio is initiated by the background running AlphonsoService which creates **tv.alphonso.audiocaptureservice.AudioCaptureService** that is in charge of the recording functions (acrMode is set to 2: SplitACR).
 ```java
     public void startRecording() {
         this.mRecorderThread.startRecording(this.mCaptureInstance);
@@ -394,4 +394,7 @@ The joined audio file is here as an mp3:
 [3-step-join-speed-redux.mp3](/audio/3-step-join-speed-redux.mp3)
 
 ### Conclusion
-The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains.
+The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains. The SDK **does** have an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers.
+
+Below is an image from the latest marketing materials from Alphonso showing associations with other data providing companies:
+![Data Partners](/images/alphonso_data_partners.jpg)
