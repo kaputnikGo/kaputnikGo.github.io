@@ -422,7 +422,27 @@ The joined audio file is here as an mp3:
 [3-step-join-speed-redux.mp3](/audio/3-step-join-speed-redux.mp3)
 
 ### Conclusion
-The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains.The SDK **does** have the option to upload fingerprints to their servers. The SDK **does** have an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers.
+The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains.The SDK **does** also have the option to upload fingerprints to their servers. The SDK **does** have an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers.
+
+Alphonso as of late appears to have moved away from the "smart phone" software area and into the "smart TV" area with partnerships that hint at utilising both TV apps and hardware to identify the audio from television broadcasts, streaming videos and gaming content.
 
 Below is an image from the latest marketing materials from Alphonso showing associations with other data providing companies:
 ![Data Partners](/images/alphonso_data_partners.jpg)
+
+Below is an image from Alphonso showing "Tune-In" attribution partners:
+![Attribution Partners](/images/alphonso_tunein_partners.jpg)
+
+In 2015 Alphonso filed for a [patent](/doc/alphonso_audio_signature_motion.pdf) titled "Efficient Apparatus and Method for Audio Signature Generation Using Motion"> A similar [patent](/doc/alphonso_audio_threshold.pdf) was filed at the same time where the difference was for an Audio Threshold feature that would set recording parameters. The first patent's abstract is below:
+```markdown
+An automatic content recognition system that includes a user device 
+for the purpose of capturing audio and generating an audio signature. 
+The user device may be a Smartphone or tablet. The system is also 
+capable of determining whether a user device is in motion and 
+refraining from audio monitoring and/or generating audio signatures 
+when the user device is in motion. Motion may also be used to reduce 
+the frequency of audio monitoring and/or signature generation. The 
+system may have a database within the user device or the user device 
+may communicate with a server having a database that contains reference 
+audio signatures.
+```
+
