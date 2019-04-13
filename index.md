@@ -146,8 +146,22 @@ The primetime settings have defaults that are set in tv.alphonso.utils.Preferenc
 
 So from here we can assume that the app has specific times and device attitudes that it will allow it to commence the audio capture process.
 
-When the game app is first started, the SDK inside it gets an updated and obfuscated database file (acr.a.2.1.4.db.zero.mp3) and sets various parameters just prior to commencing audio recording. In the test conducted, the device was kept stationary, the GPS location was spoofed to a random locale in the USA and the phonetic alphabet (alpha, bravo, charlie, ..., zulu) was read out aloud.
+When the game app is first started, the SDK inside it gets an updated and obfuscated database file called acr.a.2.1.4.db.zero.mp3 (note the mp3 file extension). The head of the file looks like this: 
+```
+00000000  41 6c 70 68 6f 6e 73 6f  41 43 52 20 20 20 20 20  |AlphonsoACR     |
+00000010  00 00 00 00 06 31 2e 34  2e 30 00 55 01 00 00 1a  |.....1.4.0.U....|
+00000020  32 30 31 33 2d 31 30 2d  31 31 20 31 33 3a 33 31  |2013-10-11 13:31|
+00000030  3a 31 37 20 2d 30 34 30  30 00 29 35 62 34 66 30  |:17 -0400.)5b4f0|
+00000040  31 33 33 31 33 64 32 66  32 64 31 33 30 65 36 39  |13313d2f2d130e69|
+00000050  64 63 35 61 30 64 32 65  63 38 61 64 62 31 32 35  |dc5a0d2ec8adb125|
+00000060  63 35 37 00 68 00 00 00  ba 00 00 00 00 04 00 00  |c57.h...........|
+```
 
+The encrypted database file probably has a schema that conforms to this but it may just be a list of time specific fingerprints:
+![database schema](/images/Screenshot_database.png)
+
+
+Some key parameters were also set in the following file found in the app storage directory:
 alphonso.xml (redacted. note: dev-id and advertising-id have same values)
 ```xml
 <map>
@@ -195,6 +209,8 @@ alphonso.xml (redacted. note: dev-id and advertising-id have same values)
     <long name="location_poll_interval" value="15" />
 </map>
 ```
+
+In the test conducted, the device was kept stationary, the GPS location was spoofed to a random locale in the USA and the phonetic alphabet (alpha, bravo, charlie, ..., zulu) was spoken aloud.
 
 The recording of audio is initiated by the AlphonsoService which creates tv.alphonso.audiocaptureservice.AudioCaptureService that is in charge of the recording functions (acrMode is set to 2: SplitACR).
 ```java
