@@ -3,12 +3,11 @@
 _(using **Alphonso SDK** (third) example of capturing spoken phonetic alphabet)_
 
 ### Introduction
-The research published on this page is one part of an ongoing project started in 2015 that has resulted in an audio counter-surveillance app that is free, [open source](https://github.com/kaputnikGo/PilferShushJammer) and available to download from either [Google Play](https://play.google.com/store/apps/details?id=cityfreqs.com.pilfershushjammer) or [F-Droid](https://f-droid.org/packages/cityfreqs.com.pilfershushjammer/) store. The research page hosted on the [City Frequencies](https://www.cityfreqs.com.au/pilfer.php) website is the primary location for information regarding this ongoing research while more general research is posted to the [@cityfreqs](https://twitter.com/cityfreqs) Twitter account.
+The research published on this page is one part of an ongoing project started in 2015 that has resulted in an audio counter-surveillance Android app that is free, [open source](https://github.com/kaputnikGo/PilferShushJammer) and available to download from either [Google Play](https://play.google.com/store/apps/details?id=cityfreqs.com.pilfershushjammer) or [F-Droid](https://f-droid.org/packages/cityfreqs.com.pilfershushjammer/) store. The research page hosted on the [City Frequencies](https://www.cityfreqs.com.au/pilfer.php) website is the primary location for information regarding this research while more general research is posted to the [@cityfreqs](https://twitter.com/cityfreqs) Twitter account.
 
-The question "is my device listening to me?" has been asked many times over the past few years. To determine an answer to this question a demonstration is examined here that uses an Android mobile phone and a game app downloaded for free from Google Play.
-This demonstration is somewhat technical in nature but is here to allow people to examine the concepts, the specificities and to conduct similar research as either a form of confirmation or for additional insights.
+The question **"is my device listening to me?"** has been asked many times over the past few years. To determine an answer to this question a demonstration is examined here that uses an Android mobile phone and a game app downloaded for free from Google Play. This demonstration is somewhat technical in nature but is here to allow people to examine both the broader concepts and some of the specificities that may encourage similar research as either a form of confirmation or for additional insights.
 
-The following investigation demonstrates that the Alphonso Software Development Kit (**SDK**) included in the game app records audio using the device microphone and then packages that audio into 64kb files suitable for uploading to servers. Whether this app and its SDK does upload these audio files is determined by the location of the device (Alphonso press statements suggest they only enable this in the USA) and a simple boolean switch in an XML file.
+The following investigation demonstrates that the Alphonso Software Development Kit (**SDK**) included in the game app records audio using the device microphone and then packages that audio into 64kb files suitable for uploading to servers. Whether this app and its SDK does upload these audio files is primarily determined by the location of the device (Alphonso press statements suggest they only enable this in the USA) and a simple boolean switch in an XML file.
 
 One of the reasons Alphonso might upload the audio is so that they can use the processing power of their servers to run proprietary code that creates new fingerprints to add to their database. An example of this reasoning can be found in Bloomberg's recent article on the [Amazon Alexa device](https://www.bloomberg.com/news/articles/2019-04-10/is-anyone-listening-to-you-on-alexa-a-global-team-reviews-audio) that shows that despite the hyperbolic marketing statements heralding the power of "machine learning" and "A.I." there is still a great need for cheap, exploitable human labour to serve as "mechanical Turks".
 
@@ -31,6 +30,9 @@ Expanding on this initial purpose, several companies are also using this ACR tec
 Another future trend can be found in a Facebook patent application that seeks to record and fingerprint background, ambient sounds to provide a context for devices and their usage - [Fastcompany Facebook ambient audio patent article](https://www.fastcompany.com/90178158/facebook-downplays-ambient-audio-tech-that-can-eavesdrop-on-you). This article also discusses other uses of this technique by companies such as Alphonso and Cambridge Analytica.
 
 ### XDT
+Cross device tracking is primarily used by advertisers and marketers as a method of measuring where and howeffect their advert dollar spends are. The intention is to prove that, for example, a company's expensive US NFL Superbowl commercial was seen by _n_ number of eyes and that a subset of that number then went on to view the company's website and (ideally) purchase something. Another part of this concept is to promote what is referred to as _nudging_ which suggests that it is possible for a given marketing campaign to "direct" the viewer in a particualr direction over all others. A useful reading on this concept can be found in [Online Manipulation: Hidden Influences in a Digital World](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3306006).
+
+Wikipedia has a simple [definition](https://en.wikipedia.org/wiki/Cross-device_tracking) quoted below:
 ```markdown
 Cross device tracking is a technique in which technology companies 
 and advertisers deploy trackers, often in the form of unique identifiers, 
@@ -41,8 +43,6 @@ of this tracking uses audio beacons, or inaudible sounds, emitted by
 ```
 
 ### APP INSTALL
-A page describing how an Android app can be analysed is found on the [Exodus Privacy website](https://exodus-privacy.eu.org/en/post/exodus_static_analysis/).
-
 In this particular investigation the Android game app is downloaded to a specific device used for mitmproxy use as well as on a computer via download using Raccoon and static analysis using jadx-gui.
 
 ![Victoria Aztec game screen](/images/VictoriaAztec_game.jpg)
@@ -75,6 +75,8 @@ Permissions requested by the app at install are shown to the user, as well as a 
 ```
 
 ### APK Analysis
+A page describing how an Android app can be analysed is found on the [Exodus Privacy website](https://exodus-privacy.eu.org/en/post/exodus_static_analysis/).
+
 Knowing that this app will use the record audio function at some point not related to the gameplay, the next step is to try and determine when that might occur. Recording audio on an Android phone is a function that does not use a large amount of battery power or CPU processing cycles nor storage if only a few files are kept and constantly written over with fresh recordings. However, recording _useful_ audio on an Android device is problematic especially when the intent is to do some sort of processing to that audio to determine its useful characteristics. In this particular case, the specific processing (ACR) is performed to try an identify features of that recorded audio. These specific features are the types of sounds derived from adverts and TV programmes which can be assumed to consist of either music, talking, sound effects or even abstract sounds.
 
 One of the first methods to reduce the amount of possible useless recordings is to restrict the times that the SDK performs the record audio method. As we are dealing with a cross device tracking SDK that triggers adverts, one of the first checks is  whether or not the device is actively being used. To help with this the PilferShush Jammer app, which contains a background services scanner, is used to list any services a particular app has that can run in the background even when the parent app is not running. The service in this case is called **tv.alphonso.service.AlphonsoService** :
@@ -344,6 +346,9 @@ These raw audio files are located in the device storage allocated for the app.
 
 The file **tv.alphonso.alphonsoclient.AlphonsoClient** has several relevant parts of the code that set the names of the audio files that will be stored and potentially uploaded to servers:
 ```java 
+  private void processAudioFileUploadRequest(android.os.Bundle r14) {
+
+
   if (args.getBoolean("audio_file_upload")) {
     params.put("filename", 
                getAudioFileUploadFilename(this.mDevId, args.getString("start_time"), 
@@ -389,4 +394,4 @@ The joined audio file is here as an mp3:
 [3-step-join-speed-redux.mp3](/audio/3-step-join-speed-redux.mp3)
 
 ### Conclusion
-
+The Alphonso SDK included in the free game downloaded from the Google Play store **did** inform the user of its intentions and **did** give the user the option to switch off the audio record function. The SDK **did** record ten seconds of human speech and save it as three raw files with specific, sequential filenames. The SDK has several options, settings and functions that indicate that it **can** upload files that have the same sequential filenames to server(s) attached to sub-domains.
