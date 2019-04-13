@@ -3,7 +3,7 @@
 _(using **Alphonso SDK** (third) example of capturing spoken phonetic alphabet)_
 
 ### Introduction
-The research published on this page is one part of an ongoing project started in 2015 that has resulted in an audio counter-surveillance Android app that is free, [open source](https://github.com/kaputnikGo/PilferShushJammer) and available to download from either [Google Play](https://play.google.com/store/apps/details?id=cityfreqs.com.pilfershushjammer) or [F-Droid](https://f-droid.org/packages/cityfreqs.com.pilfershushjammer/) store. The research page hosted on the [City Frequencies](https://www.cityfreqs.com.au/pilfer.php) website is the primary location for information regarding this research while more general research is posted to the [@cityfreqs](https://twitter.com/cityfreqs) Twitter account.
+The research published on this page is one part of an ongoing project started in 2015 that initially focussed on near ultra-high frequency (**NUHF**) audio beacon signals directed at mobile devices for tracking purposes. the project, known as **PilferShush**, has resulted in an audio counter-surveillance Android app that is free, [open source](https://github.com/kaputnikGo/PilferShushJammer) and available to download from either [Google Play](https://play.google.com/store/apps/details?id=cityfreqs.com.pilfershushjammer) or [F-Droid](https://f-droid.org/packages/cityfreqs.com.pilfershushjammer/) store. The research page hosted on the [City Frequencies](https://www.cityfreqs.com.au/pilfer.php) website is the primary location for information regarding this research while more general research is posted to the [@cityfreqs](https://twitter.com/cityfreqs) Twitter account.
 
 The question **"is my device listening to me?"** has been asked many times over the past few years. To determine an answer to this question a demonstration is examined here that uses an Android mobile phone and a game app downloaded for free from Google Play. This demonstration is somewhat technical in nature but is here to allow people to examine both the broader concepts and some of the specificities that may encourage similar research as either a form of confirmation or for additional insights.
 
@@ -446,3 +446,5 @@ may communicate with a server having a database that contains reference
 audio signatures.
 ```
 
+### Future
+The demonstration examined here was run using a mobile device that had GPS spoofing enabled, however querying its network location would have revealed the local ISP's assigned IP address. A future run should either be located in the US or be connected to a proxy that exits in the US.
