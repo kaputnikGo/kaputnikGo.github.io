@@ -8,7 +8,7 @@ The question of "is my device listening to me?" has been asked many times over t
 The app chosen has the RECORD_AUDIO permission (as listed on the store page) and is known to contain the Alphonso SDK. This SDK is used for Audio Content Recognition (**ACR**) and cross device tracking (**XDT**), a technique that attempts to derive and match unique aspects (fingerprint) of a given audio sample with a database of known fingerprints. 
 
 ### Method
-The following investigation will demonstrate that the Alphonso SDK included in the game app records audio which it then packages into 64kb files suitable for uploading to servers. After installing the app, approving the permissions and then running it for the first time, the phonetic alphabet was spoken out loud in the vicinity of the mobile device. A ten second portion of this spoken alphabet is captured by the SDK using its default settings and subdivided into five 64kb files of raw audio data. Importing the five raw audio files into Audacity as Signed 16 bit PCM, little-endian, mono, 8000Hz allows the audio to be played back legibly.
+The following investigation will demonstrate that the Alphonso SDK included in the game app records audio which it then packages into 64kb files suitable for uploading to servers. After installing the app, approving the permissions and then running it for the first time, the phonetic alphabet was spoken out loud in the vicinity of the mobile device. A ten second portion of this spoken alphabet is captured by the SDK using its default settings and subdivided into three 64kb files of raw audio data. Importing the three raw audio files into Audacity as Signed 16 bit PCM, little-endian, mono, 8000Hz allows the audio to be played back legibly.
 
 ### XDT
 what is it... and why
