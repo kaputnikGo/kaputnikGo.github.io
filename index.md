@@ -348,8 +348,10 @@ tv.alphonso.audiocaptureservice.LocalACR (edit)
 ### Audio
 After the above test has been run the captured audio files are copied across to a computer running Audacity. Each of the raw audio files are just that, raw data representing Pulse Code Modulation (**PCM**) audio. PCM is a way of storing the results of an analogue signal to digital data conversion where the value (bit depth) of the amplitude at a given time (1/sample rate) is recorded.
 
-As the raw audio has no metadata information to inform any computer program what it is, some manual settings are used at the import stage in Audacity.
+The raw audio has no metadata information to instruct any computer program what the format is so some manual settings are used at the import stage in Audacity.
+
 ![Audactiy raw audio settings](/images/import-audio-settings-alphonso.jpg)
+
 
 The imported audio waveform consisting of three raw files looks like this, where its easy to spot the blocks of measured spoken phonetic alphabet occuring.
 ![Completed audio join file](/images/Screenshot_3-step-join-speed-redux.png)
