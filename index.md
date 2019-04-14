@@ -1,3 +1,7 @@
+---
+title: Audio Trackers Research
+---
+
 These pages are for a research project, **PilferShush**, that examines the hidden methods that the Internet-of-Things uses to communicate with mobile phones and how its unregulated spread can challenge the way we think about public and private space.
 
 This hidden method is the broadcast of inaudible sounds from IoT devices and services using near-ultra high frequency (**NUHF**) audio between 18 kHz to 24 Khz. The purpose of using such hidden sounds is to identify the person and their phone without our awareness.
