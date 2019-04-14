@@ -469,7 +469,7 @@ Some other relevant parts of the code are found in files such as **tv.alphonso.a
     }
 ```
 
-The file **tv.alphonso.audiocaptureservice.LocalACR** also sets the unique, sequential part of the filenames and has an upload audio file function:
+The sequential numbering provides for a theoretical maximum of ~20 seconds of raw audio spread over five files if each file is conformed to 64kb and consists of PCM data with a sample rate of 8kHz. The file **tv.alphonso.audiocaptureservice.LocalACR** also sets the unique, sequential part of the filenames and has an upload audio file function:
 ```java
     protected String[] mLocalAudioMatchingToken = new String[]{"LocalACR1", "LocalACR2", "LocalACR3", "LocalACR4", "LocalACR5"};
   
