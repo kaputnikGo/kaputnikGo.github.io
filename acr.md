@@ -43,7 +43,7 @@ of this tracking uses audio beacons, or inaudible sounds, emitted by
 ```
 
 ### APP INSTALL
-In this particular investigation the Android game app is downloaded to a specific device used for mitmproxy use as well as on a computer via download using Raccoon and static analysis using jadx-gui.
+In this particular investigation the Android game app is downloaded to a specific Android device as well as onto a computer via Raccoon to enable static analysis using jadx-gui.
 
 ![Victoria Aztec game screen](/images/VictoriaAztec_game.jpg)
 
@@ -228,7 +228,7 @@ Some key parameters were also set when the app is first run, this time in the fo
 
 In the test conducted, the device was kept stationary, the GPS location was spoofed to a random locale in the USA and the phonetic alphabet (alpha, bravo, charlie, ..., zulu) was spoken aloud.
 
-The recording of audio is initiated by the background running AlphonsoService which creates **tv.alphonso.audiocaptureservice.AudioCaptureService** that is in charge of the recording functions (acrMode is set to 2: SplitACR).
+The recording of audio is initiated by the background running AlphonsoService which creates **tv.alphonso.audiocaptureservice.AudioCaptureService** that is in charge of the recording functions (acrMode is set in the above XML file to 2: SplitACR).
 ```java
     public void startRecording() {
         this.mRecorderThread.startRecording(this.mCaptureInstance);
@@ -346,7 +346,7 @@ public void sendFingerprint(byte[] fingerPrint, int sampleRate) {
 
 ```
 
-The above series of functions deals with the explicitly named task of generating and upload fingerprints. These are not legible audio data files but instead are proprietary signatures formed by analysing audio for features. However, the file **tv.alphonso.audiocaptureservice.LocalACR** includes a function of interest that will send the filenames of the raw audio files to a function in **tv.alphonso.alphonsoclient.AlphonsoClient**. 
+The above series of functions deals with the explicitly named task of generating and uploading fingerprints. These are not legible audio data files but instead are proprietary signatures formed by analysing audio for features. However, the file **tv.alphonso.audiocaptureservice.LocalACR** includes a function of interest that will send the filenames of the raw audio files to a function in **tv.alphonso.alphonsoclient.AlphonsoClient**. 
 ```java
     public void uploadAudioFileIfRequired(String resultSuffix) {
         if (getOnBoardAudioDBFileDir() == null) {
@@ -387,7 +387,7 @@ These raw audio files are located in the device storage allocated for the app.
 ![Alphonos ACR folder file list](/images/Alphonso-acr-folder.jpg)
 
 
-The message object containing the raw audio filenames is then sent to a function in the file **tv.alphonso.alphonsoclient.AlphonsoClient**. Several key instructions are listed below (debug is set to false):
+The message object containing the raw audio filenames is then sent to a function in the file **tv.alphonso.alphonsoclient.AlphonsoClient**. Several key instructions are listed below (debug is hardcoded to false):
 ```java
   private void processAudioFileUploadRequest(android.os.Bundle r14)
   tv.alphonso.utils.Utils.isNetworkAvailable(r8);
@@ -408,7 +408,7 @@ The message object containing the raw audio filenames is then sent to a function
   r13.invokeRESTApi(r7, r5, r6);
 ```
 
-The **invokeRESTApi** method above calls the invokeGenericRESTApi(2, uri, params, resultData) method which hardcodes the int request as "2". This is then sent to the **tv.alphonso.alphonsoclient.RESTService** and its handleMessage(...) function which sets some web POST parameters and byte arrays derived from "samples" or "audio_file_contents" and then sends the request via an  org.apache.http.impl.client.DefaultHttpClient object.
+The **invokeRESTApi** method above calls the **invokeGenericRESTApi(2, uri, params, resultData)** method which hardcodes the int request as "2". This is then sent to the **tv.alphonso.alphonsoclient.RESTService** and its handleMessage(...) function which sets some web POST parameters and byte arrays derived from "samples" or "audio_file_contents" and then sends the request via an  org.apache.http.impl.client.DefaultHttpClient object.
 ```java
     case 2:
       request2 = new HttpPost();
@@ -442,7 +442,7 @@ The **invokeRESTApi** method above calls the invokeGenericRESTApi(2, uri, params
 ```
 
 
-Some other relevant parts of the code are found in these files such as **tv.alphonso.alphonsoclient.AlphonsoClient** which sets the names of the rawaudio files that will be stored and can be uploaded to the server:
+Some other relevant parts of the code are found in files such as **tv.alphonso.alphonsoclient.AlphonsoClient** which sets the names of the raw audio files that will be stored and can be uploaded to the server:
 ```java 
  if (args.getBoolean("audio_file_upload")) {
     params.put("filename", 
@@ -469,7 +469,7 @@ Some other relevant parts of the code are found in these files such as **tv.alph
     }
 ```
 
-The file **tv.alphonso.audiocaptureservice.LocalACR** sets the unique part of the filenames and has an upload audio file function:
+The file **tv.alphonso.audiocaptureservice.LocalACR** also sets the unique, sequential part of the filenames and has an upload audio file function:
 ```java
     protected String[] mLocalAudioMatchingToken = new String[]{"LocalACR1", "LocalACR2", "LocalACR3", "LocalACR4", "LocalACR5"};
   
@@ -505,12 +505,12 @@ The file **tv.alphonso.audiocaptureservice.LocalACR** sets the unique part of th
 ### Audio
 After the above test has been run the captured raw audio files are copied across from the mobile device to a computer running Audacity. Each of the raw audio files are just that, raw data representing Pulse Code Modulation (**PCM**) audio. PCM is a way of storing the results of an analogue signal to digital data conversion where the value (bit depth) of the amplitude at a given time (1 / sample rate) is recorded.
 
-The raw audio has no metadata information to instruct any computer program what the format is so some manual settings are used at the import stage in Audacity. Interestingly, when the sample rate of 8kHz is used, either as a result of a downsampling process or set by the original AudioRecord method, the three raw audio files are 64kB in size which correlates to the maximum size of an IP packet over IPv4.
+The raw audio has no file header information to instruct any computer program what the format is so some manual settings are used at the import stage in Audacity. Interestingly, when the sample rate of 8kHz is used, either as a result of a downsampling process in the SDK or set by the original AudioRecord method, the three raw audio files are 64kB in size which correlates to the maximum size of an IP packet over IPv4.
 
 ![Audactiy raw audio settings](/images/import-audio-settings-alphonso.jpg)
 
 
-The imported audio waveform consisting of three raw files looks like this, where its easy to spot the blocks of measured spoken phonetic alphabet occuring.
+The imported audio waveform consisting of three raw files providing 10 seconds of legible audio looks like this, where its easy to spot the blocks of measured spoken phonetic alphabet occuring.
 ![Completed audio join file](/images/Screenshot_3-step-join-speed-redux.png)
 
 The three raw audio files stored on the device are joined and saved as an mp3 for legible playback:
@@ -527,7 +527,7 @@ The SDK has several options, settings and functions that indicate that it:
 - **can** upload raw audio files that have the same sequential filenames to server(s) attached to sub-domains.
 - **does** also have the option to upload audio fingerprints to their servers. 
 
-Also, the SDK has an integration with Facebook, collects location information as well as device specific identifying information and integrates with other advertisers. While the app used in this demonstration was last updated in 2017, it still successfully connects to Alphonso servers and downloads various files.
+Also, the SDK has an integration at least nine advertising SDKs as well as with Facebook. It also collects location information as well as device specific identifying information. While the app used in this demonstration was last updated in 2017, it still successfully connects and posts data to a number of servers as well as downloads various files.
 
 ### Future
 The demonstration examined here was run using a mobile device that had GPS spoofing enabled, however querying its network location would have revealed the local ISP's assigned IP address. A future run should either be located in the US or be connected to a proxy that exits in the US.
