@@ -499,7 +499,9 @@ The SDK has several options, settings and functions that indicate that it:
 - **can** upload raw audio files that have the same sequential filenames to server(s) attached to sub-domains.
 - **does** have the option to upload audio fingerprints to their servers. 
 
-Also, the game app has an integration of at least [16 tracker SDKs](https://reports.exodus-privacy.eu.org/en/reports/1039/) while the Alphonso SDK itself has an integration with Facebook. It also collects location information as well as device specific identifying information. While the app used in this demonstration was last updated in 2017 (Version: 1.0.16), it still successfully connects and posts data to a number of servers as well as downloads various files.
+One theory as to what occured during this demonstration is the SDK recorded some audio at the nominal 44.1kHz to five raw audio files, created a fingerprint file from that audio, attempted to match it with its own on-device database, failed to find a match and then finally down-sampled the original audio to 8kHz ready for uploading to the servers along with the fingerprint file. A possible reason for doing this last step is so that the audio could be identified either via some computational method at the server, or via mechanical Turks listening for key descriptive features so that this new audio and fingerprint could be added to the database.
+
+Further, the game app has an integration of at least [16 tracker SDKs](https://reports.exodus-privacy.eu.org/en/reports/1039/) while the Alphonso SDK itself has an integration with Facebook. It also collects location information as well as device specific identifying information. While the app used in this demonstration was last updated in 2017 (Version: 1.0.16), it still successfully connects and posts data to a number of servers as well as downloads various files.
 
 ### Future
 The demonstration examined here was run using a mobile device that had GPS spoofing enabled, however querying its network location would have revealed the local ISP's assigned IP address. A future run should either be located in the US or be connected to a proxy that exits in the US.
