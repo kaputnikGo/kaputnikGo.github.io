@@ -490,10 +490,15 @@ The three raw audio files stored on the device are joined and saved as an mp3 fo
 
 Original five raw audio files (no headers) as recorded by the app SDK (each 64kb):
 [LocalACR1.audio.raw](/audio/LocalACR1.audio.raw)
+
 [LocalACR2.audio.raw](/audio/LocalACR2.audio.raw)
+
 [LocalACR3.audio.raw](/audio/LocalACR3.audio.raw)
+
 [LocalACR4.audio.raw](/audio/LocalACR4.audio.raw)
+
 [LocalACR5.audio.raw](/audio/LocalACR5.audio.raw)
+
 
 ### Conclusion
 The Alphonso SDK included in the free game downloaded from the Google Play store:
